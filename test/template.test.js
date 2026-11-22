@@ -155,6 +155,13 @@ test("whitespace dashes, comments, and %> inside strings", async () => {
   })).text, "Notes/Daily.md 2026-11-17");
 });
 
+test("a comment is dropped even when it holds a quote or a slash", async () => {
+  assert.equal((await renderTemplate("A<%# Don't forget %>B", { now })).text, "AB");
+  assert.equal((await renderTemplate("A<%# it's // fine %>B", { now })).text, "AB");
+  assert.equal((await renderTemplate("A <%# trimmed -%> B", { now })).text, "A B");
+  await assert.rejects(() => renderTemplate("A<%# never closed", { now }), /missing %>/);
+});
+
 test("a broken tag fails before the note changes", async () => {
   await assert.rejects(() => renderTemplate("<% tp.file.title", { now }), /missing %>/);
   await assert.rejects(() => renderTemplate("<% ) %>", { now }), TemplateError);
