@@ -1,8 +1,19 @@
 {
   "name": "notia-templater",
+  "version": "0.1.0",
   "private": true,
+  "description": "Creates a note from a template, or inserts one at the cursor, in a single command.",
+  "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "node --test"
+    "test": "node --import ./test/support/register.mjs --test \"test/*.test.js\"",
+    "typecheck": "tsc -p jsconfig.json",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.15.0",
+    "globals": "17.14.0",
+    "typescript": "5.9.3"
   }
 }
