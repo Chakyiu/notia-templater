@@ -40,7 +40,7 @@ export default class Templater extends Plugin {
     try {
       saved = await this.loadData();
     } catch {
-      saved = null;
+      // A missing or broken data.json means the defaults.
     }
     this.settings = settingsFrom(saved);
     this.syncCommands();
@@ -194,7 +194,7 @@ export default class Templater extends Plugin {
       new Notice("The new-notes folder and the templates folder are the same. Choose another folder in Templater settings.");
       return;
     }
-    let source = "";
+    let source;
     try {
       source = this.app.vault.read(templatePath);
     } catch (error) {
