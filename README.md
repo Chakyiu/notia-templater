@@ -102,9 +102,15 @@ A tag can name `tp.file.path` or call `tp.file.path()`. Both insert the path.
 
 `notia.d.ts` is a copy of the plugin API. `jsconfig.json` points editors at it. When Notia's API changes, copy the new one from `crates/notia-js/notia.d.ts` in Notia, or from `.notia/plugins/notia.d.ts`.
 
+The plugin itself has no dependencies. Everything in `devDependencies` is for the checks, and the versions are pinned.
+
 ## Check
 
 ```bash
+npm ci
 npm test
-npx -p typescript tsc -p jsconfig.json
+npm run typecheck
+npm run lint
 ```
+
+`npm test` runs `node --test` against the tests in `test/`, with the `notia` API replaced by a stub, so no vault is needed. `.github/workflows/ci.yml` runs the same three checks on Linux, macOS and Windows.
